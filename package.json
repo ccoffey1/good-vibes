@@ -1,0 +1,541 @@
+{
+  "name": "good-vibes",
+  "displayName": "Good Vibes Review",
+  "description": "Review Claude Code's changes like a pull request: per-turn diffs, inline comments from you and Claude, and one-click send-back to Claude.",
+  "version": "0.1.14",
+  "publisher": "good-vibes",
+  "license": "UNLICENSED",
+  "private": true,
+  "engines": {
+    "vscode": "^1.100.0"
+  },
+  "categories": [
+    "SCM Providers",
+    "Other"
+  ],
+  "main": "./dist/extension.js",
+  "activationEvents": [
+    "workspaceContains:.git"
+  ],
+  "contributes": {
+    "viewsContainers": {
+      "activitybar": [
+        {
+          "id": "goodVibes",
+          "title": "Good Vibes Review",
+          "icon": "resources/icon.svg"
+        }
+      ]
+    },
+    "views": {
+      "goodVibes": [
+        {
+          "id": "goodVibes.changes",
+          "name": "Changes"
+        },
+        {
+          "id": "goodVibes.comments",
+          "name": "Comments"
+        }
+      ]
+    },
+    "viewsWelcome": [
+      {
+        "view": "goodVibes.changes",
+        "contents": "No changes in this scope.\n[Change scope](command:goodVibes.pickScope)\n\nTo get a diff for every Claude turn and let Claude read and leave comments, connect Claude Code once per repository.\n[Connect Claude Code](command:goodVibes.setupClaude)"
+      }
+    ],
+    "commands": [
+      {
+        "command": "goodVibes.pickScope",
+        "title": "Change Review Scope…",
+        "category": "Good Vibes",
+        "icon": "$(git-compare)"
+      },
+      {
+        "command": "goodVibes.refresh",
+        "title": "Refresh",
+        "category": "Good Vibes",
+        "icon": "$(refresh)"
+      },
+      {
+        "command": "goodVibes.openFile",
+        "title": "Open Diff",
+        "category": "Good Vibes"
+      },
+      {
+        "command": "goodVibes.nextFile",
+        "title": "Next File",
+        "category": "Good Vibes",
+        "icon": "$(arrow-down)"
+      },
+      {
+        "command": "goodVibes.previousFile",
+        "title": "Previous File",
+        "category": "Good Vibes",
+        "icon": "$(arrow-up)"
+      },
+      {
+        "command": "goodVibes.markViewedAndNext",
+        "title": "Mark Viewed and Go to Next File",
+        "category": "Good Vibes",
+        "icon": "$(circle-large-outline)"
+      },
+      {
+        "command": "goodVibes.toggleViewed",
+        "title": "Toggle Viewed",
+        "category": "Good Vibes"
+      },
+      {
+        "command": "goodVibes.nextComment",
+        "title": "Next Comment",
+        "category": "Good Vibes"
+      },
+      {
+        "command": "goodVibes.previousComment",
+        "title": "Previous Comment",
+        "category": "Good Vibes"
+      },
+      {
+        "command": "goodVibes.sendToClaude",
+        "title": "Send Pending Comments to Claude",
+        "category": "Good Vibes",
+        "icon": "$(send)"
+      },
+      {
+        "command": "goodVibes.setupClaude",
+        "title": "Connect Claude Code (Hooks + MCP)",
+        "category": "Good Vibes"
+      },
+      {
+        "command": "goodVibes.revealThread",
+        "title": "Go to Comment",
+        "category": "Good Vibes"
+      },
+      {
+        "command": "goodVibes.createThread",
+        "title": "Comment",
+        "category": "Good Vibes"
+      },
+      {
+        "command": "goodVibes.closeThread",
+        "title": "Close",
+        "category": "Good Vibes",
+        "icon": "$(trash)"
+      },
+      {
+        "command": "goodVibes.reopenThread",
+        "title": "Reopen",
+        "category": "Good Vibes",
+        "icon": "$(issue-reopened)"
+      },
+      {
+        "command": "goodVibes.sendThread",
+        "title": "Add to Chat",
+        "category": "Good Vibes",
+        "icon": "$(send)"
+      },
+      {
+        "command": "goodVibes.deleteThread",
+        "title": "Delete Thread",
+        "category": "Good Vibes",
+        "icon": "$(trash)"
+      },
+      {
+        "command": "goodVibes.editComment",
+        "title": "Edit",
+        "category": "Good Vibes",
+        "icon": "$(edit)"
+      },
+      {
+        "command": "goodVibes.saveComment",
+        "title": "Save",
+        "category": "Good Vibes"
+      },
+      {
+        "command": "goodVibes.cancelEdit",
+        "title": "Cancel",
+        "category": "Good Vibes"
+      },
+      {
+        "command": "goodVibes.unmarkViewed",
+        "title": "Viewed (Click to Unmark)",
+        "category": "Good Vibes",
+        "icon": "$(pass-filled)"
+      },
+      {
+        "command": "goodVibes.viewAsTree",
+        "title": "View as Tree",
+        "category": "Good Vibes",
+        "icon": "$(list-tree)"
+      },
+      {
+        "command": "goodVibes.viewAsList",
+        "title": "View as List",
+        "category": "Good Vibes",
+        "icon": "$(list-flat)"
+      },
+      {
+        "command": "goodVibes.sendToClaudeChoose",
+        "title": "Send Pending Comments to Session…",
+        "category": "Good Vibes",
+        "icon": "$(chevron-down)"
+      },
+      {
+        "command": "goodVibes.createAndAddToChat",
+        "title": "Add to Chat",
+        "category": "Good Vibes"
+      },
+      {
+        "command": "goodVibes.createAndAddToChatChoose",
+        "title": "Add to Chat in…",
+        "category": "Good Vibes"
+      },
+      {
+        "command": "goodVibes.addCommentToChatChoose",
+        "title": "Add to Chat in Session…",
+        "category": "Good Vibes",
+        "icon": "$(send)"
+      },
+      {
+        "command": "goodVibes.reply",
+        "title": "Comment",
+        "category": "Good Vibes"
+      },
+      {
+        "command": "goodVibes.replyAndAddToChat",
+        "title": "Add to Chat",
+        "category": "Good Vibes"
+      },
+      {
+        "command": "goodVibes.replyAndAddToChatChoose",
+        "title": "Add to Chat in…",
+        "category": "Good Vibes"
+      }
+    ],
+    "menus": {
+      "view/title": [
+        {
+          "command": "goodVibes.sendToClaude",
+          "when": "view == goodVibes.comments",
+          "group": "navigation@1"
+        },
+        {
+          "command": "goodVibes.sendToClaudeChoose",
+          "when": "view == goodVibes.comments",
+          "group": "navigation@2"
+        },
+        {
+          "command": "goodVibes.pickScope",
+          "when": "view == goodVibes.changes",
+          "group": "navigation@1"
+        },
+        {
+          "command": "goodVibes.previousFile",
+          "when": "view == goodVibes.changes",
+          "group": "navigation@2"
+        },
+        {
+          "command": "goodVibes.nextFile",
+          "when": "view == goodVibes.changes",
+          "group": "navigation@3"
+        },
+        {
+          "command": "goodVibes.refresh",
+          "when": "view == goodVibes.changes",
+          "group": "navigation@4"
+        },
+        {
+          "command": "goodVibes.viewAsTree",
+          "when": "view == goodVibes.changes && goodVibes.fileLayout != tree",
+          "group": "navigation@5"
+        },
+        {
+          "command": "goodVibes.viewAsList",
+          "when": "view == goodVibes.changes && goodVibes.fileLayout == tree",
+          "group": "navigation@5"
+        }
+      ],
+      "view/item/context": [
+        {
+          "command": "goodVibes.toggleViewed",
+          "when": "view == goodVibes.changes && viewItem == file",
+          "group": "inline"
+        },
+        {
+          "command": "goodVibes.closeThread",
+          "when": "view == goodVibes.comments && viewItem == thread-open",
+          "group": "inline@1"
+        },
+        {
+          "command": "goodVibes.sendThread",
+          "when": "view == goodVibes.comments && viewItem =~ /^thread-/",
+          "group": "inline@2"
+        },
+        {
+          "command": "goodVibes.reopenThread",
+          "when": "view == goodVibes.comments && viewItem == thread-resolved",
+          "group": "inline@1"
+        },
+        {
+          "command": "goodVibes.deleteThread",
+          "when": "view == goodVibes.comments && viewItem =~ /^thread-/",
+          "group": "z"
+        }
+      ],
+      "editor/title": [
+        {
+          "command": "goodVibes.markViewedAndNext",
+          "when": "goodVibes.reviewing && !goodVibes.activeFileViewed",
+          "group": "navigation@-100"
+        },
+        {
+          "command": "goodVibes.unmarkViewed",
+          "when": "goodVibes.reviewing && goodVibes.activeFileViewed",
+          "group": "navigation@-100"
+        }
+      ],
+      "comments/commentThread/context": [
+        {
+          "command": "goodVibes.createAndAddToChat",
+          "when": "commentController == good-vibes && commentThreadIsEmpty",
+          "group": "inline@1"
+        },
+        {
+          "command": "goodVibes.createAndAddToChatChoose",
+          "when": "commentController == good-vibes && commentThreadIsEmpty",
+          "group": "inline@2"
+        },
+        {
+          "command": "goodVibes.createThread",
+          "when": "commentController == good-vibes && commentThreadIsEmpty",
+          "group": "inline@3"
+        },
+        {
+          "command": "goodVibes.replyAndAddToChat",
+          "when": "commentController == good-vibes && !commentThreadIsEmpty",
+          "group": "inline@1"
+        },
+        {
+          "command": "goodVibes.replyAndAddToChatChoose",
+          "when": "commentController == good-vibes && !commentThreadIsEmpty",
+          "group": "inline@2"
+        },
+        {
+          "command": "goodVibes.reply",
+          "when": "commentController == good-vibes && !commentThreadIsEmpty",
+          "group": "inline@3"
+        }
+      ],
+      "comments/commentThread/title": [
+        {
+          "command": "goodVibes.closeThread",
+          "when": "commentController == good-vibes && commentThread == open",
+          "group": "navigation@3"
+        },
+        {
+          "command": "goodVibes.reopenThread",
+          "when": "commentController == good-vibes && commentThread == resolved",
+          "group": "navigation@3"
+        }
+      ],
+      "comments/comment/title": [
+        {
+          "command": "goodVibes.addCommentToChatChoose",
+          "when": "commentController == good-vibes && comment == editable-unsent",
+          "group": "inline@0"
+        },
+        {
+          "command": "goodVibes.editComment",
+          "when": "commentController == good-vibes && comment =~ /^editable/",
+          "group": "inline@1"
+        }
+      ],
+      "comments/comment/context": [
+        {
+          "command": "goodVibes.cancelEdit",
+          "when": "commentController == good-vibes",
+          "group": "inline@1"
+        },
+        {
+          "command": "goodVibes.saveComment",
+          "when": "commentController == good-vibes",
+          "group": "inline@2"
+        }
+      ],
+      "commandPalette": [
+        {
+          "command": "goodVibes.openFile",
+          "when": "false"
+        },
+        {
+          "command": "goodVibes.revealThread",
+          "when": "false"
+        },
+        {
+          "command": "goodVibes.createThread",
+          "when": "false"
+        },
+        {
+          "command": "goodVibes.closeThread",
+          "when": "false"
+        },
+        {
+          "command": "goodVibes.reopenThread",
+          "when": "false"
+        },
+        {
+          "command": "goodVibes.sendThread",
+          "when": "false"
+        },
+        {
+          "command": "goodVibes.deleteThread",
+          "when": "false"
+        },
+        {
+          "command": "goodVibes.editComment",
+          "when": "false"
+        },
+        {
+          "command": "goodVibes.saveComment",
+          "when": "false"
+        },
+        {
+          "command": "goodVibes.cancelEdit",
+          "when": "false"
+        },
+        {
+          "command": "goodVibes.toggleViewed",
+          "when": "false"
+        },
+        {
+          "command": "goodVibes.unmarkViewed",
+          "when": "goodVibes.reviewing && goodVibes.activeFileViewed"
+        },
+        {
+          "command": "goodVibes.createAndAddToChat",
+          "when": "false"
+        },
+        {
+          "command": "goodVibes.createAndAddToChatChoose",
+          "when": "false"
+        },
+        {
+          "command": "goodVibes.addCommentToChatChoose",
+          "when": "false"
+        },
+        {
+          "command": "goodVibes.reply",
+          "when": "false"
+        },
+        {
+          "command": "goodVibes.replyAndAddToChat",
+          "when": "false"
+        },
+        {
+          "command": "goodVibes.replyAndAddToChatChoose",
+          "when": "false"
+        }
+      ]
+    },
+    "keybindings": [
+      {
+        "command": "goodVibes.nextComment",
+        "key": "ctrl+alt+j",
+        "mac": "cmd+alt+j"
+      },
+      {
+        "command": "goodVibes.previousComment",
+        "key": "ctrl+alt+k",
+        "mac": "cmd+alt+k"
+      },
+      {
+        "command": "goodVibes.nextFile",
+        "key": "ctrl+alt+.",
+        "mac": "cmd+alt+.",
+        "when": "goodVibes.active"
+      },
+      {
+        "command": "goodVibes.previousFile",
+        "key": "ctrl+alt+,",
+        "mac": "cmd+alt+,",
+        "when": "goodVibes.active"
+      },
+      {
+        "command": "goodVibes.markViewedAndNext",
+        "key": "ctrl+alt+y",
+        "mac": "cmd+alt+y",
+        "when": "goodVibes.reviewing"
+      },
+      {
+        "command": "goodVibes.sendToClaude",
+        "key": "ctrl+alt+enter",
+        "mac": "cmd+alt+enter",
+        "when": "goodVibes.active"
+      }
+    ],
+    "configuration": {
+      "title": "Good Vibes Review",
+      "properties": {
+        "goodVibes.baseBranch": {
+          "type": "string",
+          "default": "",
+          "description": "Branch to compare against for the Branch scope. Empty = detect origin's default branch (falls back to main/master)."
+        },
+        "goodVibes.delivery": {
+          "type": "string",
+          "enum": [
+            "auto",
+            "ask",
+            "terminal",
+            "claudePanel",
+            "clipboard"
+          ],
+          "enumDescriptions": [
+            "One running Claude session for this repo (VS Code terminal or Claude extension chat): send there. Several: ask, then remember the choice. None: the Claude extension's open chat if installed, else the clipboard.",
+            "Always ask which session to send to.",
+            "Claude sessions in VS Code terminals only.",
+            "Whichever chat is open in the Claude Code extension.",
+            "Copy the @-mention to the clipboard."
+          ],
+          "default": "auto",
+          "description": "Where pending comments are sent."
+        },
+        "goodVibes.nodePath": {
+          "type": "string",
+          "default": "node",
+          "description": "Node executable Claude Code uses to run the Good Vibes hook and MCP server."
+        },
+        "goodVibes.notifyOnTurnEnd": {
+          "type": "boolean",
+          "default": true,
+          "description": "Offer to review a turn's changes when Claude finishes responding."
+        }
+      }
+    },
+    "configurationDefaults": {
+      "comments.openView": "never"
+    }
+  },
+  "scripts": {
+    "build": "node esbuild.mjs",
+    "watch": "node esbuild.mjs --watch",
+    "typecheck": "tsc --noEmit",
+    "test": "vitest run",
+    "package": "npm run typecheck && npm test && node esbuild.mjs --production && vsce package --no-dependencies --allow-missing-repository",
+    "test:integration": "node esbuild.mjs && node test/integration/run.mjs"
+  },
+  "devDependencies": {
+    "@types/node": "^22.10.0",
+    "@types/vscode": "~1.100.0",
+    "@vscode/test-electron": "^3.1.0",
+    "@vscode/vsce": "^3.6.0",
+    "esbuild": "^0.25.0",
+    "typescript": "^5.8.0",
+    "vitest": "^3.2.0"
+  },
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "^1.32.2",
+    "zod": "^4.6.7"
+  }
+}

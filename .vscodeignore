@@ -1,0 +1,7 @@
+**
+!dist/extension.js
+!dist/mcp.js
+!dist/hook.js
+!resources/**
+!package.json
+!README.md
