@@ -2,7 +2,7 @@
   "name": "good-vibes",
   "displayName": "Good Vibes Review",
   "description": "Review Claude Code's changes like a pull request: per-turn diffs, inline comments from you and Claude, and one-click send-back to Claude.",
-  "version": "0.1.14",
+  "version": "0.1.15",
   "publisher": "good-vibes",
   "license": "UNLICENSED",
   "private": true,
@@ -229,16 +229,6 @@
           "command": "goodVibes.pickScope",
           "when": "view == goodVibes.changes",
           "group": "navigation@1"
-        },
-        {
-          "command": "goodVibes.previousFile",
-          "when": "view == goodVibes.changes",
-          "group": "navigation@2"
-        },
-        {
-          "command": "goodVibes.nextFile",
-          "when": "view == goodVibes.changes",
-          "group": "navigation@3"
         },
         {
           "command": "goodVibes.refresh",
